@@ -1,0 +1,8 @@
+{
+  "name": "massa-sc-std",
+  "version": "1.0.0",
+  "repository": "https://github.com/massalabs/massa-sc-create",
+  "author": "Adrien Zinger <zinger.ad@gmail.com>, Yvan Sraka <yvan@sraka.xyz>",
+  "license": "MIT",
+  "private": false
+}
