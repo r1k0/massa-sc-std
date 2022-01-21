@@ -22,7 +22,6 @@ export declare function assembly_script_address_from_public_key(public_key: stri
 export declare function assembly_script_get_time(): u64;
 export declare function assembly_script_unsafe_random(): i64;
 
-export namespace Massa {
 /**
  * Prints in the node logs
  *
@@ -68,6 +67,7 @@ export function create_sc(bytecode: string): string {
     return assembly_script_create_sc(bytecode);
 }
 
+export namespace Storage {
 /**
  * Set data in the creator of operation ledger entry database.
  *
@@ -194,6 +194,7 @@ export function get_data_or_default_for(address:string, key: string, default_val
     }
     return default_value;
 }
+}
 
 /**
  * Get context current owned addresses.
@@ -282,7 +283,7 @@ export function get_balance_for(address: string): u64 {
  * @param data Data to hash
  */
 export function hash(data: string): string {
-    return assembly_script_hash(event);
+    return assembly_script_hash(data);
 }
 
 /**
@@ -338,5 +339,4 @@ export function unsafe_random(): i64 {
 export function include_base64(_path: string): string {
     /* NOT IMPLEMENTED HERE */
     abort('Please use massa tool *include_base64* compilation')
-}
 }
