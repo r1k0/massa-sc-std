@@ -22,7 +22,6 @@ export declare function assembly_script_address_from_public_key(public_key: stri
 export declare function assembly_script_get_time(): u64;
 export declare function assembly_script_unsafe_random(): i64;
 
-export namespace Massa {
 /**
  * Prints in the node logs
  *
@@ -338,5 +337,4 @@ export function unsafe_random(): i64 {
 export function include_base64(_path: string): string {
     /* NOT IMPLEMENTED HERE */
     abort('Please use massa tool *include_base64* compilation')
-}
 }
