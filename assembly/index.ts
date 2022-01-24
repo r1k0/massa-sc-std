@@ -1,25 +1,48 @@
+@external("massa", "assembly_script_print")
 export declare function assembly_script_print(message: string): void
+@external("massa", "assembly_script_call")
 export declare function assembly_script_call(address: string, func: string, param: string, call_coins: i64): string
+@external("massa", "assembly_script_get_remaining_gas")
 export declare function assembly_script_get_remaining_gas(): u64
+@external("massa", "assembly_script_create_sc")
 export declare function assembly_script_create_sc(bytecode: string): string
+@external("massa", "assembly_script_set_data")
 export declare function assembly_script_set_data(key: string, value: string): void;
+@external("massa", "assembly_script_set_data_for")
 export declare function assembly_script_set_data_for(address: string, key: string, value: string): void;
+@external("massa", "assembly_script_get_data")
 export declare function assembly_script_get_data(key: string): string;
+@external("massa", "assembly_script_get_data_for")
 export declare function assembly_script_get_data_for(address: string, key: string): string;
+@external("massa", "assembly_script__has_data")
 export declare function assembly_script_has_data(key: string): bool;
+@external("massa", "assembly_script_has_data_for")
 export declare function assembly_script_has_data_for(address: string, key: string): bool;
+@external("massa", "assembly_script_get_owned_addresses")
 export declare function assembly_script_get_owned_addresses(): string;
+@external("massa", "assembly_script_get_call_stack")
 export declare function assembly_script_get_call_stack(): string;
+@external("massa", "assembly_script_generate_event")
 export declare function assembly_script_generate_event(event: string): void;
+@external("massa", "assembly_script_transfer_coins")
 export declare function assembly_script_transfer_coins(to_address: string, raw_amount: u64): void;
+@external("massa", "assembly_script_transfer_coins_for")
 export declare function assembly_script_transfer_coins_for(from_address: string, to_address: string, raw_amount: u64): void;
+@external("massa", "assembly_script_get_balance")
 export declare function assembly_script_get_balance(): u64;
+@external("massa", "assembly_script_get_balance_for")
 export declare function assembly_script_get_balance_for(address: string): u64;
+@external("massa", "assembly_script_get_call_coins")
 export declare function assembly_script_get_call_coins(): u64;
+@external("massa", "assembly_script_hash")
 export declare function assembly_script_hash(data: string): string;
+@external("massa", "assembly_script_signature_verify")
 export declare function assembly_script_signature_verify(data: string, signature: string, public_key: string): bool;
+@external("massa", "assembly_script_address_from_public_key")
 export declare function assembly_script_address_from_public_key(public_key: string): string;
+@external("massa", "assembly_script_get_time")
 export declare function assembly_script_get_time(): u64;
+@external("massa", "assembly_script_unsafe_random")
 export declare function assembly_script_unsafe_random(): i64;
 
 /**
