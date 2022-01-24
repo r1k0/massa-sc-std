@@ -2,7 +2,13 @@
   "name": "massa-sc-std",
   "version": "1.1.0",
   "repository": "https://github.com/massalabs/massa-sc-create",
+  "types": "assembly/index.ts",
+  "ascMain": "assembly/index.ts",
   "author": "Adrien Zinger <zinger.ad@gmail.com>, Yvan Sraka <yvan@sraka.xyz>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "assemblyscript": "^0.19.20",
+    "jest": "^27.4.5"
+  }
 }
