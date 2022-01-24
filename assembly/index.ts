@@ -14,7 +14,7 @@ export declare function assembly_script_set_data_for(address: string, key: strin
 export declare function assembly_script_get_data(key: string): string;
 @external("massa", "assembly_script_get_data_for")
 export declare function assembly_script_get_data_for(address: string, key: string): string;
-@external("massa", "assembly_script__has_data")
+@external("massa", "assembly_script_has_data")
 export declare function assembly_script_has_data(key: string): bool;
 @external("massa", "assembly_script_has_data_for")
 export declare function assembly_script_has_data_for(address: string, key: string): bool;
