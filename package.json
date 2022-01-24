@@ -2,7 +2,7 @@
   "name": "massa-sc-std",
   "version": "1.0.0",
   "types": "assembly/index.ts",
-  "ascMain": "assembly/index.ts",
+  "ascMain": "assembly/massa.ts",
   "author": "Adrien Zinger <zinger.ad@gmail.com>, Yvan Sraka <yvan@sraka.xyz>",
   "license": "MIT",
   "private": false,
