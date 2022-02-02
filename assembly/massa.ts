@@ -37,11 +37,11 @@ export function print(message: string): void {
  * @param address Address hash in format string
  * @param func Function name exported in the module
  * @param param String input parameters
- * @param param i64 call coins
+ * @param param u64 raw call coins
  * @returns String output of the function called
  */
-export function call(address: string, func: string, param: string, call_coins: i64): string {
-    return assembly_script_call(address, func, param, call_coins);
+export function call(address: string, func: string, param: string, raw_coins: u64): string {
+    return assembly_script_call(address, func, param, raw_coins);
 }
 
 /**
