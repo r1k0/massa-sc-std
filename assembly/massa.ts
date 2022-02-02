@@ -1,5 +1,5 @@
 export declare function assembly_script_print(message: string): void
-export declare function assembly_script_call(address: string, func: string, param: string, call_coins: i64): string
+export declare function assembly_script_call(address: string, func: string, param: string, raw_coins: u64): string
 export declare function assembly_script_get_remaining_gas(): u64
 export declare function assembly_script_create_sc(bytecode: string): string
 export declare function assembly_script_set_data(key: string, value: string): void;
