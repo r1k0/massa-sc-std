@@ -1,7 +1,7 @@
 @external("massa", "assembly_script_print")
 export declare function assembly_script_print(message: string): void
 @external("massa", "assembly_script_call")
-export declare function assembly_script_call(address: string, func: string, param: string, raw_coins: u64): string
+export declare function assembly_script_call(address: string, func: string, param: string, call_coins: i64): string
 @external("massa", "assembly_script_get_remaining_gas")
 export declare function assembly_script_get_remaining_gas(): u64
 @external("massa", "assembly_script_create_sc")
@@ -60,19 +60,11 @@ export function print(message: string): void {
  * @param address Address hash in format string
  * @param func Function name exported in the module
  * @param param String input parameters
- * @param param u64 raw call coins
+ * @param param i64 call coins
  * @returns String output of the function called
  */
-export function call(address: string, func: string, param: string, raw_coins: u64): string {
-    return assembly_script_call(address, func, param, raw_coins);
-}
-
-/**
- * Return the remaining gas available
- * @returns Gas available
- */
-export function get_remaining_gas(): u64 {
-    return assembly_script_get_remaining_gas();
+export function call(address: string, func: string, param: string, call_coins: i64): string {
+    return assembly_script_call(address, func, param, call_coins);
 }
 
 
@@ -91,155 +83,188 @@ export function create_sc(bytecode: string): string {
 }
 
 export namespace Storage {
-/**
- * Set data in the creator of operation ledger entry database.
- *
- * ```js
- * // Each ledger entry contains this object.
- * {
- *  sce_balance, // Amount
- *  database, // HashMap<Hash, Vec<u8>>
- *  program_data, // Vec<u8>
- * }
- * ```
- * @param key key address of the data
- * @param value value to put in the DB
- */
-export function set_data(key: string, value: string): void {
-    assembly_script_set_data(key, value);
-}
-
-/**
- * Set data in the creator of operation ledger entry database in a specified address. \
- * You won't be able to insert a value if you're not the direct creator of the entry \
- * or the owner of the address.
- *
- * ```js
- * // Each ledger entry contains this object.
- * {
- *  sce_balance, // Amount
- *  database, // HashMap<Hash, Vec<u8>>
- *  program_data, // Vec<u8>
- * }
- * ```
- * @param address address of a smart contract or user hash
- * @param key key address of the data
- * @param value value to put in the DB
- */
-export function set_data_for(address: string, key: string, value: string): void {
-    assembly_script_set_data_for(address, key, value);
-}
-
-/**
- * Get data in the creator of operation ledger entry database.
- *
- * ```js
- * // Each ledger entry contains this object.
- * {
- *  sce_balance, // Amount
- *  database, // HashMap<Hash, Vec<u8>>
- *  program_data, // Vec<u8>
- * }
- * ```
- * @param key key address of the data
- * @param value value if the key
- */
-export function get_data(key: string): string {
-    return assembly_script_get_data(key);
-}
-
-/**
- * Get data in the creator of operation ledger entry database in a specified address.
- *
- * ```js
- * // Each ledger entry contains this object.
- * {
- *  sce_balance, // Amount
- *  database, // HashMap<Hash, Vec<u8>>
- *  program_data, // Vec<u8>
- * }
- * ```
- * @param address address of a smart contract or user hash
- * @param key key address of the data
- * @param value value if the key
- */
-export function get_data_for(address: string, key: string): string {
-    return assembly_script_get_data_for(address, key);
-}
-
-/**
- * Checks whether an entry exists in the caller's datastore.
- *
- * @param key key of the data (will be hashed internally)
- * @returns true if the key was found, false otherwise
- */
-export function has_data(key: string): bool {
-    return assembly_script_has_data(key);
-}
-
-/**
- * Checks whether an entry exists in the datastore of an arbitrary address.
- *
- * @param address target address
- * @param key key of the data (will be hashed internally)
- * @returns true if the key was found, false otherwise
- */
-export function has_data_for(address: string, key: string): bool {
-    return assembly_script_has_data_for(address, key);
-}
-
-/**
- *  Returns an entry from the caller's datastore or a default value if not found
- *
- * @param address target address
- * @param key key of the data (will be hashed internally)
- * @param default_value default value if not found
- * @returns found string value or default string
- */
-export function get_data_or_default(key: string, default_value: string): string {
-    if(has_data(key)) {
-        return get_data(key);
+    /**
+     * Set data in the creator of operation ledger entry database.
+     *
+     * ```js
+     * // Each ledger entry contains this object.
+     * {
+     *  sce_balance, // Amount
+     *  database, // HashMap<Hash, Vec<u8>>
+     *  program_data, // Vec<u8>
+     * }
+     * ```
+     * @param key key address of the data
+     * @param value value to put in the DB
+     */
+    export function set_data(key: string, value: string): void {
+        assembly_script_set_data(key, value);
     }
-    return default_value;
-}
 
-/**
- *  Returns an entry from an address' datastore or a default value if not found
- *
- * @param address target address
- * @param key key of the data (will be hashed internally)
- * @param default_value default value if not found
- * @returns found string value or default string
- */
-export function get_data_or_default_for(address:string, key: string, default_value: string): string {
-    if(has_data_for(address, key)) {
-        return get_data_for(address, key);
+    /**
+     * Set data in the creator of operation ledger entry database in a specified address. \
+     * You won't be able to insert a value if you're not the direct creator of the entry \
+     * or the owner of the address.
+     *
+     * ```js
+     * // Each ledger entry contains this object.
+     * {
+     *  sce_balance, // Amount
+     *  database, // HashMap<Hash, Vec<u8>>
+     *  program_data, // Vec<u8>
+     * }
+     * ```
+     * @param address address of a smart contract or user hash
+     * @param key key address of the data
+     * @param value value to put in the DB
+     */
+    export function set_data_for(address: string, key: string, value: string): void {
+        assembly_script_set_data_for(address, key, value);
     }
-    return default_value;
-}
+
+    /**
+     * Get data in the creator of operation ledger entry database.
+     *
+     * ```js
+     * // Each ledger entry contains this object.
+     * {
+     *  sce_balance, // Amount
+     *  database, // HashMap<Hash, Vec<u8>>
+     *  program_data, // Vec<u8>
+     * }
+     * ```
+     * @param key key address of the data
+     * @param value value if the key
+     */
+    export function get_data(key: string): string {
+        return assembly_script_get_data(key);
+    }
+
+    /**
+     * Get data in the creator of operation ledger entry database in a specified address.
+     *
+     * ```js
+     * // Each ledger entry contains this object.
+     * {
+     *  sce_balance, // Amount
+     *  database, // HashMap<Hash, Vec<u8>>
+     *  program_data, // Vec<u8>
+     * }
+     * ```
+     * @param address address of a smart contract or user hash
+     * @param key key address of the data
+     * @param value value if the key
+     */
+    export function get_data_for(address: string, key: string): string {
+        return assembly_script_get_data_for(address, key);
+    }
+
+    /**
+     * Checks whether an entry exists in the caller's datastore.
+     *
+     * @param key key of the data (will be hashed internally)
+     * @returns true if the key was found, false otherwise
+     */
+    export function has_data(key: string): bool {
+        return assembly_script_has_data(key);
+    }
+
+    /**
+     * Checks whether an entry exists in the datastore of an arbitrary address.
+     *
+     * @param address target address
+     * @param key key of the data (will be hashed internally)
+     * @returns true if the key was found, false otherwise
+     */
+    export function has_data_for(address: string, key: string): bool {
+        return assembly_script_has_data_for(address, key);
+    }
+
+    /**
+     *  Returns an entry from the caller's datastore or a default value if not found
+     *
+     * @param address target address
+     * @param key key of the data (will be hashed internally)
+     * @param default_value default value if not found
+     * @returns found string value or default string
+     */
+    export function get_data_or_default(key: string, default_value: string): string {
+        if (has_data(key)) {
+            return get_data(key);
+        }
+        return default_value;
+    }
+
+    /**
+     *  Returns an entry from an address' datastore or a default value if not found
+     *
+     * @param address target address
+     * @param key key of the data (will be hashed internally)
+     * @param default_value default value if not found
+     * @returns found string value or default string
+     */
+    export function get_data_or_default_for(address: string, key: string, default_value: string): string {
+        if (has_data_for(address, key)) {
+            return get_data_for(address, key);
+        }
+        return default_value;
+    }
 }
 
-/**
- * Get context current owned addresses.
- *
- * You can check your own address or check the addresses of the smart contract you've created during the current execution.
- *
- * @returns JSON formated list of addresses containing the owned addresses
- */
-export function get_owned_addresses(): string {
-    return assembly_script_get_owned_addresses();
-}
+export namespace Context {
 
-/**
- * Get context current call stack
- *
- * The call stack is stack of called module. You can look all previous \
- * addresses since the address of the operation sender.
- *
- * @returns JSON formated list of addresses containing the call stack
- */
-export function get_call_stack(): string {
-    return assembly_script_get_call_stack();
+
+    /**
+     * Get context current owned addresses.
+     *
+     * You can check your own address or check the addresses of the smart contract you've created during the current execution.
+     *
+     * @returns JSON formated list of addresses containing the owned addresses
+     */
+    export function get_owned_addresses(): string {
+        return assembly_script_get_owned_addresses();
+    }
+
+    /**
+     * Get context current call stack
+     *
+     * The call stack is stack of called module. You can look all previous \
+     * addresses since the address of the operation sender.
+     *
+     * @returns JSON formated list of addresses containing the call stack
+     */
+    export function get_call_stack(): string {
+        return assembly_script_get_call_stack();
+    }
+
+    /**
+    * Gets the amount of coins transferred in the current call
+    *
+    * @returns Raw amount of coins (in elementary nits)
+    */
+    export function get_call_coins(): u64 {
+        return assembly_script_get_call_coins();
+    }
+
+
+    /**
+     * Gets the slot unix timestamp in milliseconds
+     *
+     * @returns unix timestamp in milliseconds
+     */
+    export function get_time(): u64 {
+        return assembly_script_get_time();
+    }
+
+
+    /**
+     * Return the remaining gas available
+     * @returns Gas available
+     */
+    export function get_remaining_gas(): u64 {
+        return assembly_script_get_remaining_gas();
+    }
+
 }
 
 /**
@@ -281,17 +306,9 @@ export function get_balance(): u64 {
     return assembly_script_get_balance();
 }
 
-/**
- * Gets the amount of coins transferred in the current call
- *
- * @returns Raw amount of coins (in elementary nits)
- */
- export function get_call_coins(): u64 {
-    return assembly_script_get_call_coins();
-}
 
 /**
- * Gets the balance of the current address
+ * Gets the balance of the specified address
  *
  * @param addres Address hash in format string
  * @returns The raw balance of the address (in elementary nits)
@@ -329,15 +346,6 @@ export function signature_verify(data: string, signature: string, public_key: st
  */
 export function address_from_public_key(data: string): string {
     return assembly_script_address_from_public_key(data);
-}
-
-/**
- * Gets the slot unix timestamp in milliseconds
- *
- * @returns unix timestamp in milliseconds
- */
-export function get_time(): u64 {
-    return assembly_script_get_time();
 }
 
 /**

@@ -1,5 +1,5 @@
 export declare function assembly_script_print(message: string): void
-export declare function assembly_script_call(address: string, func: string, param: string, raw_coins: u64): string
+export declare function assembly_script_call(address: string, func: string, param: string, call_coins: i64): string
 export declare function assembly_script_get_remaining_gas(): u64
 export declare function assembly_script_create_sc(bytecode: string): string
 export declare function assembly_script_set_data(key: string, value: string): void;
@@ -37,11 +37,11 @@ export function print(message: string): void {
  * @param address Address hash in format string
  * @param func Function name exported in the module
  * @param param String input parameters
- * @param param u64 raw call coins
+ * @param param i64 call coins
  * @returns String output of the function called
  */
-export function call(address: string, func: string, param: string, raw_coins: u64): string {
-    return assembly_script_call(address, func, param, raw_coins);
+export function call(address: string, func: string, param: string, call_coins: i64): string {
+    return assembly_script_call(address, func, param, call_coins);
 }
 
 /**
