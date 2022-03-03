@@ -1,3 +1,5 @@
+import { JSON } from "assemblyscript-json";
+
 @external("massa", "assembly_script_print")
 export declare function assembly_script_print(message: string): void
 @external("massa", "assembly_script_call")
@@ -57,22 +59,23 @@ export declare function assembly_script_get_current_thread(): u8;
  * @param message Message string
  */
 export function print(message: string): void {
-    assembly_script_print(message);
+    return assembly_script_print(message);
 }
 
 /**
  * Retreive a module in the ledger at the given address and call a function
  *
+ * The function is paramatrized by T the type of the parameters given
+ *
  * @param address Address hash in format string
  * @param func Function name exported in the module
- * @param param String input parameters
+ * @param param T input parameters
  * @param param i64 call coins
  * @returns String output of the function called
  */
-export function call(address: string, func: string, param: string, call_coins: i64): string {
-    return assembly_script_call(address, func, param, call_coins);
+export function call<T>(address: string, func: string, param: T, call_coins: i64): string {
+    return assembly_script_call(address, func, JSON.from<T>(param).stringify(), call_coins);
 }
-
 
 /**
  * Take a base64 string representing the module binary and create an entry in
@@ -104,7 +107,7 @@ export namespace Storage {
      * @param value value to put in the DB
      */
     export function set_data(key: string, value: string): void {
-        assembly_script_set_data(key, value);
+        return assembly_script_set_data(key, value);
     }
 
     /**
@@ -125,7 +128,7 @@ export namespace Storage {
      * @param value value to put in the DB
      */
     export function set_data_for(address: string, key: string, value: string): void {
-        assembly_script_set_data_for(address, key, value);
+        return assembly_script_set_data_for(address, key, value);
     }
 
     /**
@@ -142,8 +145,8 @@ export namespace Storage {
      * @param key key address of the data
      * @param value value if the key
      */
-    export function get_data(key: string): string {
-        return assembly_script_get_data(key);
+    export function get_data(key: string): JSON.Obj {
+        return <JSON.Obj>(JSON.parse(assembly_script_get_data(key)));
     }
 
     /**
@@ -161,8 +164,8 @@ export namespace Storage {
      * @param key key address of the data
      * @param value value if the key
      */
-    export function get_data_for(address: string, key: string): string {
-        return assembly_script_get_data_for(address, key);
+    export function get_data_for(address: string, key: string): JSON.Obj {
+        return <JSON.Obj>(JSON.parse(assembly_script_get_data_for(address, key)));
     }
 
     /**
@@ -194,7 +197,7 @@ export namespace Storage {
      * @param default_value default value if not found
      * @returns found string value or default string
      */
-    export function get_data_or_default(key: string, default_value: string): string {
+    export function get_data_or_default(key: string, default_value: JSON.Obj): JSON.Obj {
         if (has_data(key)) {
             return get_data(key);
         }
@@ -209,7 +212,7 @@ export namespace Storage {
      * @param default_value default value if not found
      * @returns found string value or default string
      */
-    export function get_data_or_default_for(address: string, key: string, default_value: string): string {
+     export function get_data_or_default_for(address: string, key: string, default_value: JSON.Obj): JSON.Obj {
         if (has_data_for(address, key)) {
             return get_data_for(address, key);
         }
@@ -218,8 +221,6 @@ export namespace Storage {
 }
 
 export namespace Context {
-
-
     /**
      * Get context current owned addresses.
      *
@@ -239,8 +240,28 @@ export namespace Context {
      *
      * @returns JSON formated list of addresses containing the call stack
      */
-    export function get_call_stack(): string {
-        return assembly_script_get_call_stack();
+    function get_call_stack(): string[] {
+        return (<JSON.Arr>(JSON.parse(assembly_script_get_call_stack()))).valueOf().map(x => x.toString());
+    }
+
+    /**
+     * Get context current caller address.
+     *
+     * @returns addresse of the caller
+     */
+    export function get_caller(): string {
+        const addresses = get_call_stack();
+        return addresses[addresses.length - 2].toString();
+    }
+
+    /**
+     * Get context current transaction creator address.
+     *
+     * @returns address of the transaction creator
+     */
+    export function get_tx_creator(): string {
+        const addresses = get_call_stack();
+        return addresses[0].toString();
     }
 
     /**
@@ -252,7 +273,6 @@ export namespace Context {
         return assembly_script_get_call_coins();
     }
 
-
     /**
      * Gets the slot unix timestamp in milliseconds
      *
@@ -262,7 +282,6 @@ export namespace Context {
         return assembly_script_get_time();
     }
 
-
     /**
      * Return the remaining gas available
      * @returns Gas available
@@ -270,7 +289,6 @@ export namespace Context {
     export function get_remaining_gas(): u64 {
         return assembly_script_get_remaining_gas();
     }
-
 }
 
 /**
@@ -279,7 +297,7 @@ export namespace Context {
  * @param message String version of the event
  */
 export function generate_event(event: string): void {
-    assembly_script_generate_event(event);
+    return assembly_script_generate_event(event);
 }
 
 /**
@@ -311,7 +329,6 @@ export function transfer_coins_for(from_address: string, to_address: string, raw
 export function get_balance(): u64 {
     return assembly_script_get_balance();
 }
-
 
 /**
  * Gets the balance of the specified address
