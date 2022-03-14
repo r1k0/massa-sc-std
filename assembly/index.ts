@@ -44,6 +44,8 @@ export declare function assembly_script_address_from_public_key(public_key: stri
 export declare function assembly_script_get_time(): u64;
 @external("massa", "assembly_script_unsafe_random")
 export declare function assembly_script_unsafe_random(): i64;
+@external("massa", "assembly_script_send_message")
+export declare function assembly_script_send_message(target_address: string, target_handler: string, validity_start_slot: [u64, u64], validity_end_slot: [u64, u64], max_gas: u64, gas_price: string, coins: string, payload: string): void;
 
 /**
  * Prints in the node logs
@@ -356,6 +358,19 @@ export function address_from_public_key(data: string): string {
  */
 export function unsafe_random(): i64 {
     return assembly_script_unsafe_random();
+}
+
+/**
+ * Retreive a module in the ledger at the given address and call a function
+ *
+ * @param address Address hash in format string
+ * @param func Function name exported in the module
+ * @param param String input parameters
+ * @param param i64 call coins
+ * @returns String output of the function called
+ */
+ export function send_message(target_address: string, target_handler: string, validity_start_slot: [u64, u64], validity_end_slot: [u64, u64], max_gas: u64, gas_price: string, coins: string, payload: string): void {
+    return assembly_script_send_message(target_address, target_handler, validity_start_slot, validity_end_slot, max_gas, gas_price, coins, payload);
 }
 
 /**
