@@ -45,7 +45,7 @@ export declare function assembly_script_get_time(): u64;
 @external("massa", "assembly_script_unsafe_random")
 export declare function assembly_script_unsafe_random(): i64;
 @external("massa", "assembly_script_send_message")
-export declare function assembly_script_send_message(target_address: string, target_handler: string, validity_start_slot: [u64, u64], validity_end_slot: [u64, u64], max_gas: u64, gas_price: string, coins: string, payload: string): void;
+export declare function assembly_script_send_message(target_address: string, target_handler: string,validity_start_period: i64, validity_start_thread: i64, validity_end_period: i64, validity_end_thread: i64, max_gas: u64, gas_price: string, coins: string, payload: string): void;
 
 /**
  * Prints in the node logs
@@ -312,7 +312,7 @@ export function get_balance(): u64 {
 /**
  * Gets the balance of the specified address
  *
- * @param addres Address hash in format string
+ * @param address Address hash in format string
  * @returns The raw balance of the address (in elementary nits)
  */
 export function get_balance_for(address: string): u64 {
@@ -361,16 +361,22 @@ export function unsafe_random(): i64 {
 }
 
 /**
- * Retreive a module in the ledger at the given address and call a function
+ * Sends an async message
  *
- * @param address Address hash in format string
- * @param func Function name exported in the module
- * @param param String input parameters
- * @param param i64 call coins
- * @returns String output of the function called
+ * @param target_address Destination address hash in format string
+ * @param target_handler Name of the message handling function
+ * @param validity_start_period Period of the validity start slot
+ * @param validity_start_thread Thread of the validity start slot
+ * @param validity_end_period Period of the validity end slot
+ * @param validity_end_thread Thread of the validity end slot
+ * @param max_gas Maximum gas for the message execution
+ * @param gas_price Price of one gas unit
+ * @param coins Coins of the sender
+ * @param payload Message payload
+ * @returns Nothing
  */
- export function send_message(target_address: string, target_handler: string, validity_start_slot: [u64, u64], validity_end_slot: [u64, u64], max_gas: u64, gas_price: string, coins: string, payload: string): void {
-    return assembly_script_send_message(target_address, target_handler, validity_start_slot, validity_end_slot, max_gas, gas_price, coins, payload);
+export function send_message(target_address: string, target_handler: string, validity_start_period: i64, validity_start_thread: i64, validity_end_period: i64, validity_end_thread: i64, max_gas: u64, gas_price: string, coins: string, payload: string): void {
+    return assembly_script_send_message(target_address, target_handler, validity_start_period, validity_start_thread, validity_end_period, validity_end_thread, max_gas, gas_price, coins, payload);
 }
 
 /**
