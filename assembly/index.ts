@@ -45,7 +45,7 @@ export declare function assembly_script_get_time(): u64;
 @external("massa", "assembly_script_unsafe_random")
 export declare function assembly_script_unsafe_random(): i64;
 @external("massa", "assembly_script_send_message")
-export declare function assembly_script_send_message(target_address: string, target_handler: string,validity_start_period: i64, validity_start_thread: i64, validity_end_period: i64, validity_end_thread: i64, max_gas: u64, gas_price: string, coins: string, payload: string): void;
+export declare function assembly_script_send_message(target_address: string, target_handler: string, validity_start_period: u64, validity_start_thread: u8, validity_end_period: u64, validity_end_thread: u8, max_gas: u64, gas_price: string, coins: string, data: string): void;
 
 /**
  * Prints in the node logs
@@ -365,18 +365,16 @@ export function unsafe_random(): i64 {
  *
  * @param target_address Destination address hash in format string
  * @param target_handler Name of the message handling function
- * @param validity_start_period Period of the validity start slot
- * @param validity_start_thread Thread of the validity start slot
- * @param validity_end_period Period of the validity end slot
- * @param validity_end_thread Thread of the validity end slot
+ * @param validity_start Tuple containing the period and thread of the validity start slot
+ * @param validity_end Tuple containing the period and thread of the validity end slot
  * @param max_gas Maximum gas for the message execution
  * @param gas_price Price of one gas unit
  * @param coins Coins of the sender
- * @param payload Message payload
+ * @param data Message data
  * @returns Nothing
  */
-export function send_message(target_address: string, target_handler: string, validity_start_period: i64, validity_start_thread: i64, validity_end_period: i64, validity_end_thread: i64, max_gas: u64, gas_price: string, coins: string, payload: string): void {
-    return assembly_script_send_message(target_address, target_handler, validity_start_period, validity_start_thread, validity_end_period, validity_end_thread, max_gas, gas_price, coins, payload);
+export function send_message(target_address: string, target_handler: string, validity_start: [u64, u8], validity_end: [u64, u8], max_gas: u64, gas_price: string, coins: string, data: string): void {
+    return assembly_script_send_message(target_address, target_handler, validity_start[0], validity_start[1], validity_end[0], validity_end[1], max_gas, gas_price, coins, data);
 }
 
 /**
