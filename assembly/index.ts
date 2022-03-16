@@ -45,7 +45,7 @@ export declare function assembly_script_get_time(): u64;
 @external("massa", "assembly_script_unsafe_random")
 export declare function assembly_script_unsafe_random(): i64;
 @external("massa", "assembly_script_send_message")
-export declare function assembly_script_send_message(target_address: string, target_handler: string, validity_start_period: u64, validity_start_thread: u8, validity_end_period: u64, validity_end_thread: u8, max_gas: u64, gas_price: string, coins: string, data: string): void;
+export declare function assembly_script_send_message(target_address: string, target_handler: string, validity_start_period: u64, validity_start_thread: u8, validity_end_period: u64, validity_end_thread: u8, max_gas: u64, gas_price: u64, raw_coins: u64, data: string): void;
 
 /**
  * Prints in the node logs
@@ -375,8 +375,8 @@ export function unsafe_random(): i64 {
  * @param data Message data
  * @returns Nothing
  */
-export function send_message(target_address: string, target_handler: string, validity_start_period: u64, validity_start_thread: u8, validity_end_period: u64, validity_end_thread: u8, max_gas: u64, gas_price: string, coins: string, data: string): void {
-    return assembly_script_send_message(target_address, target_handler, validity_start_period, validity_start_thread, validity_end_period, validity_end_thread, max_gas, gas_price, coins, data);
+export function send_message(target_address: string, target_handler: string, validity_start_period: u64, validity_start_thread: u8, validity_end_period: u64, validity_end_thread: u8, max_gas: u64, gas_price: u64, raw_coins: u64, data: string): void {
+    return assembly_script_send_message(target_address, target_handler, validity_start_period, validity_start_thread, validity_end_period, validity_end_thread, max_gas, gas_price, raw_coins, data);
 }
 
 /**
