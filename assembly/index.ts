@@ -46,6 +46,10 @@ export declare function assembly_script_get_time(): u64;
 export declare function assembly_script_unsafe_random(): i64;
 @external("massa", "assembly_script_send_message")
 export declare function assembly_script_send_message(target_address: string, target_handler: string, validity_start_period: u64, validity_start_thread: u8, validity_end_period: u64, validity_end_thread: u8, max_gas: u64, gas_price: u64, raw_coins: u64, data: string): void;
+@external("massa", "assembly_script_get_current_period")
+export declare function assembly_script_get_current_period(): u64;
+@external("massa", "assembly_script_get_current_thread")
+export declare function assembly_script_get_current_thread(): u8;
 
 /**
  * Prints in the node logs
@@ -391,4 +395,20 @@ export function send_message(target_address: string, target_handler: string, val
 export function include_base64(_path: string): string {
     /* NOT IMPLEMENTED HERE */
     abort('Please use massa tool *include_base64* compilation')
+}
+
+/**
+ * Retrieves the current period
+ *
+ */
+export function get_current_period(): u64 {
+    return assembly_script_get_current_period();
+}
+
+/**
+ * Retrieves the current thread
+ *
+ */
+export function get_current_thread(): u8 {
+    return assembly_script_get_current_thread();
 }
