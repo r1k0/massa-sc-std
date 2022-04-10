@@ -240,8 +240,8 @@ export namespace Context {
      *
      * @returns JSON formated list of addresses containing the call stack
      */
-    function get_call_stack(): string[] {
-        return (<JSON.Arr>(JSON.parse(assembly_script_get_call_stack()))).valueOf().map(x => x.toString());
+    export function get_call_stack(): string[] {
+        return (<JSON.Arr>(JSON.parse(assembly_script_get_call_stack()))).valueOf().map<string>(x => x.toString());
     }
 
     /**
