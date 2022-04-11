@@ -93,79 +93,45 @@ export function create_sc(bytecode: string): string {
 
 export namespace Storage {
     /**
-     * Set data in the creator of operation ledger entry database.
+     * Sets a data entry in the datastore of the current address (top of the call stack).
+     * Existing entries are overwritten and missing ones are created.
      *
-     * ```js
-     * // Each ledger entry contains this object.
-     * {
-     *  sce_balance, // Amount
-     *  database, // HashMap<Hash, Vec<u8>>
-     *  program_data, // Vec<u8>
-     * }
-     * ```
-     * @param key key address of the data
-     * @param value value to put in the DB
+     * @param key key string
+     * @param value value to set
      */
     export function set_data(key: string, value: string): void {
         return assembly_script_set_data(key, value);
     }
 
     /**
-     * Set data in the creator of operation ledger entry database in a specified address. \
-     * You won't be able to insert a value if you're not the direct creator of the entry \
-     * or the owner of the address.
+     * Sets a data entry in the datastore of a target address (if allowed).
+     * Existing entries are overwritten and missing ones are created.
      *
-     * ```js
-     * // Each ledger entry contains this object.
-     * {
-     *  sce_balance, // Amount
-     *  database, // HashMap<Hash, Vec<u8>>
-     *  program_data, // Vec<u8>
-     * }
-     * ```
-     * @param address address of a smart contract or user hash
-     * @param key key address of the data
-     * @param value value to put in the DB
+     * @param key key string
+     * @param value value to set
      */
     export function set_data_for(address: string, key: string, value: string): void {
         return assembly_script_set_data_for(address, key, value);
     }
 
     /**
-     * Get data in the creator of operation ledger entry database.
+     * Returns a data entry from the datastore of the current address (top of the call stack).
+     * Fails if absent.
      *
-     * ```js
-     * // Each ledger entry contains this object.
-     * {
-     *  sce_balance, // Amount
-     *  database, // HashMap<Hash, Vec<u8>>
-     *  program_data, // Vec<u8>
-     * }
-     * ```
-     * @param key key address of the data
-     * @param value value if the key
+     * @param key key string
      */
-    export function get_data(key: string): JSON.Obj {
-        return <JSON.Obj>(JSON.parse(assembly_script_get_data(key)));
+    export function get_data(key: string): string {
+        return assembly_script_get_data(key);
     }
 
     /**
-     * Get data in the creator of operation ledger entry database in a specified address.
+     * Returns a data entry from the datastore of a target address.
+     * Fails if absent.
      *
-     * ```js
-     * // Each ledger entry contains this object.
-     * {
-     *  sce_balance, // Amount
-     *  database, // HashMap<Hash, Vec<u8>>
-     *  program_data, // Vec<u8>
-     * }
-     * ```
-     * @param address address of a smart contract or user hash
-     * @param key key address of the data
-     * @param value value if the key
+     * @param key key string
      */
-    export function get_data_for(address: string, key: string): JSON.Obj {
-        return <JSON.Obj>(JSON.parse(assembly_script_get_data_for(address, key)));
+    export function get_data_for(address: string, key: string): string {
+        return assembly_script_get_data_for(address, key);
     }
 
     /**
@@ -197,7 +163,7 @@ export namespace Storage {
      * @param default_value default value if not found
      * @returns found string value or default string
      */
-    export function get_data_or_default(key: string, default_value: JSON.Obj): JSON.Obj {
+    export function get_data_or_default(key: string, default_value: string): string {
         if (has_data(key)) {
             return get_data(key);
         }
@@ -212,7 +178,7 @@ export namespace Storage {
      * @param default_value default value if not found
      * @returns found string value or default string
      */
-     export function get_data_or_default_for(address: string, key: string, default_value: JSON.Obj): JSON.Obj {
+     export function get_data_or_default_for(address: string, key: string, default_value: string): string {
         if (has_data_for(address, key)) {
             return get_data_for(address, key);
         }
