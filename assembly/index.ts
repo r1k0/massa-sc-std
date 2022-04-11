@@ -73,7 +73,7 @@ export function print(message: string): void {
  * @param param u64 call coins
  * @returns String output of the function called
  */
-export function call<T>(address: string, func: string, param: string, call_coins: u64): string {
+export function call(address: string, func: string, param: string, call_coins: u64): string {
     return assembly_script_call(address, func, param, call_coins);
 }
 
