@@ -3,7 +3,7 @@ import { JSON } from "assemblyscript-json";
 @external("massa", "assembly_script_print")
 export declare function assembly_script_print(message: string): void
 @external("massa", "assembly_script_call")
-export declare function assembly_script_call(address: string, func: string, param: string, call_coins: i64): string
+export declare function assembly_script_call(address: string, func: string, param: string, call_coins: u64): string
 @external("massa", "assembly_script_get_remaining_gas")
 export declare function assembly_script_get_remaining_gas(): u64
 @external("massa", "assembly_script_create_sc")
@@ -69,12 +69,12 @@ export function print(message: string): void {
  *
  * @param address Address hash in format string
  * @param func Function name exported in the module
- * @param param T input parameters
- * @param param i64 call coins
+ * @param param input parameters as string
+ * @param param u64 call coins
  * @returns String output of the function called
  */
-export function call<T>(address: string, func: string, param: T, call_coins: i64): string {
-    return assembly_script_call(address, func, JSON.from<T>(param).stringify(), call_coins);
+export function call<T>(address: string, func: string, param: string, call_coins: u64): string {
+    return assembly_script_call(address, func, param, call_coins);
 }
 
 /**
