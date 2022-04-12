@@ -59,7 +59,7 @@ export declare function assembly_script_get_current_thread(): u8;
  * @param message Message string
  */
 export function print(message: string): void {
-    return assembly_script_print(message);
+    assembly_script_print(message);
 }
 
 /**
@@ -100,7 +100,7 @@ export namespace Storage {
      * @param value value to set
      */
     export function set_data(key: string, value: string): void {
-        return assembly_script_set_data(key, value);
+        assembly_script_set_data(key, value);
     }
 
     /**
@@ -111,7 +111,7 @@ export namespace Storage {
      * @param value value to set
      */
     export function set_data_for(address: string, key: string, value: string): void {
-        return assembly_script_set_data_for(address, key, value);
+        assembly_script_set_data_for(address, key, value);
     }
 
     /**
@@ -263,7 +263,7 @@ export namespace Context {
  * @param message String version of the event
  */
 export function generate_event(event: string): void {
-    return assembly_script_generate_event(event);
+    assembly_script_generate_event(event);
 }
 
 /**
@@ -273,7 +273,7 @@ export function generate_event(event: string): void {
  * @param raw_amount Raw amount (in elementary units)
  */
 export function transfer_coins(to_address: string, raw_amount: u64): void {
-    return assembly_script_transfer_coins(to_address, raw_amount);
+    assembly_script_transfer_coins(to_address, raw_amount);
 }
 
 /**
@@ -284,7 +284,7 @@ export function transfer_coins(to_address: string, raw_amount: u64): void {
  * @param raw_amount Raw amount (in elementary units)
  */
 export function transfer_coins_for(from_address: string, to_address: string, raw_amount: u64): void {
-    return assembly_script_transfer_coins_for(from_address, to_address, raw_amount);
+    assembly_script_transfer_coins_for(from_address, to_address, raw_amount);
 }
 
 /**
@@ -363,7 +363,7 @@ export function unsafe_random(): i64 {
  * @returns Nothing
  */
 export function send_message(target_address: string, target_handler: string, validity_start_period: u64, validity_start_thread: u8, validity_end_period: u64, validity_end_thread: u8, max_gas: u64, gas_price: u64, raw_coins: u64, data: string): void {
-    return assembly_script_send_message(target_address, target_handler, validity_start_period, validity_start_thread, validity_end_period, validity_end_thread, max_gas, gas_price, raw_coins, data);
+    assembly_script_send_message(target_address, target_handler, validity_start_period, validity_start_thread, validity_end_period, validity_end_thread, max_gas, gas_price, raw_coins, data);
 }
 
 /**
