@@ -12,5 +12,8 @@
   },
   "dependencies": {
     "assemblyscript-json": "^1.1.0"
+  },
+  "scripts": {
+      "test": "asc assembly/index.ts"
   }
 }
