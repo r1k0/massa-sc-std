@@ -376,8 +376,8 @@ export function send_message(target_address: string, target_handler: string, val
  * @param _path
  */
 export function include_base64(_path: string): string {
-    /* NOT IMPLEMENTED HERE */
     abort('Please use massa tool *include_base64* compilation')
+    return "/!\ NOT IMPLEMENTED HERE";
 }
 
 /**
