@@ -1,7 +1,7 @@
 {
   "name": "massa-sc-std",
-  "version": "3.0.0",
-  "repository": "https://github.com/massalabs/massa-sc-create",
+  "version": "3.0.2",
+  "repository": "https://github.com/massalabs/massa-sc-std",
   "types": "assembly/index.ts",
   "ascMain": "assembly/index.ts",
   "author": "Massa Labs <info@massa.net>",
