@@ -52,6 +52,11 @@ export declare function assembly_script_send_message(target_address: string, tar
 export declare function assembly_script_get_current_period(): u64;
 @external("massa", "assembly_script_get_current_thread")
 export declare function assembly_script_get_current_thread(): u8;
+@external("massa", "assembly_script_set_bytecode")
+export declare function assembly_script_set_bytecode(bytecode: string): void
+@external("massa", "assembly_script_set_bytecode_for")
+export declare function assembly_script_set_bytecode_for(address: string, bytecode: string): void
+
 
 /**
  * Prints in the node logs
@@ -183,6 +188,27 @@ export namespace Storage {
             return get_data_for(address, key);
         }
         return default_value;
+    }
+
+    /**
+     *  Sets the executable bytecode of an address.
+     *  Fails if the address doesn't exist of if write access rights are missing.
+     *
+     * @param address target address
+     * @param bytecode base64-encoded bytecode
+     */
+    export function set_bytecode_for(address: string, bytecode: string): void {
+        assembly_script_set_bytecode_for(address, bytecode);
+    }
+
+    /**
+     *  Sets the executable bytecode of the current address (top of the call stack).
+     *  Fails if the address doesn't exist of if write access rights are missing.
+     *
+     * @param bytecode base64-encoded bytecode
+     */
+    export function set_bytecode(bytecode: string): void {
+        assembly_script_set_bytecode(bytecode);
     }
 }
 
