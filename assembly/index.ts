@@ -16,6 +16,14 @@ export declare function assembly_script_set_data_for(address: string, key: strin
 export declare function assembly_script_get_data(key: string): string;
 @external("massa", "assembly_script_get_data_for")
 export declare function assembly_script_get_data_for(address: string, key: string): string;
+@external("massa", "assembly_script_delete_data")
+export declare function assembly_script_delete_data(key: string): void
+@external("massa", "assembly_script_delete_data_for")
+export declare function assembly_script_delete_data_for(address: string, key: string): void
+@external("massa", "assembly_script_append_data")
+export declare function assembly_script_append_data(key: string, value: string): void
+@external("massa", "assembly_script_append_data_for")
+export declare function assembly_script_append_data_for(address: string, key: string, value: string): void
 @external("massa", "assembly_script_has_data")
 export declare function assembly_script_has_data(key: string): bool;
 @external("massa", "assembly_script_has_data_for")
@@ -137,6 +145,49 @@ export namespace Storage {
      */
     export function get_data_for(address: string, key: string): string {
         return assembly_script_get_data_for(address, key);
+    }
+
+    /**
+     * Delete an entry from the datastore of the current address (top of the call stack).
+     * Fails if absent.
+     * 
+     * @param key key string
+     */
+    export function delete_data(key: string): void {
+        return assembly_script_delete_data(key);
+    }
+
+    /**
+     * Delete an entry from the datastore of a target address.
+     * Fails if absent.
+     * 
+     * @param address target address
+     * @param key key string
+     */
+    export function delete_data_for(address: string, key: string): void {
+        return assembly_script_delete_data_for(address, key);
+    }
+
+    /**
+     * Append data to a datastore entry of the current address (top of the call stack).
+     * Fails if absent.
+     * 
+     * @param key key string
+     * @param value value to append
+     */
+    export function append_data(key: string, value: string): void {
+        return assembly_script_append_data(key, value);
+    }
+
+    /**
+     * Append data to a datastore entry of a target address.
+     * 
+     * @param address target address
+     * @param key key string
+     * @param value value to append
+     */
+    export function append_data_for(address: string, key: string, value: string): void {
+        return assembly_script_append_data_for(address, key, value);
     }
 
     /**
