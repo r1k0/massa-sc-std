@@ -1,5 +1,5 @@
 import * as abi from './abi';
-import { Address } from './address';
+import {Address} from './address';
 
 /**
  * Sets (key, value) in the datastore of the callee's address.

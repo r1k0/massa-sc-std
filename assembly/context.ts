@@ -1,5 +1,5 @@
 import * as abi from './abi';
-import { Address } from './address';
+import {Address} from './address';
 
 /**
  * Returns an array of addresses.
