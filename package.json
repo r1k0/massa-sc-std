@@ -1,6 +1,6 @@
 {
     "name": "@massalabs/massa-sc-std",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "description": "Massa standard library interfaces",
     "repository": {
         "type": "git",
