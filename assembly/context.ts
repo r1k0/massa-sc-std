@@ -1,4 +1,4 @@
-import * as abi from './abi';
+import {env} from './env';
 import {Address} from './address';
 
 /**
@@ -27,7 +27,7 @@ function json2Address(str: string): Array<Address> {
  * @return {Array<Address>}
  */
 export function ownedAddresses(): Array<Address> {
-  return json2Address(abi.ownedAddresses());
+  return json2Address(env.ownedAddresses());
 }
 
 /**
@@ -40,7 +40,7 @@ export function ownedAddresses(): Array<Address> {
  * @return {Array<Address>}
  */
 export function addressStack(): Array<Address> {
-  return json2Address(abi.callStack());
+  return json2Address(env.callStack());
 }
 
 /**
@@ -83,7 +83,7 @@ export function transactionCreator(): Address {
  * @return {u64} - value in the smallest unit.
  */
 export function transferedCoins(): u64 {
-  return abi.callCoins();
+  return env.callCoins();
 }
 
 /**
@@ -92,7 +92,7 @@ export function transferedCoins(): u64 {
  * @return {u64}
  */
 export function timestamp(): u64 {
-  return abi.time();
+  return env.time();
 }
 
 /**
@@ -100,5 +100,5 @@ export function timestamp(): u64 {
  * @return {u64}
  */
 export function remainingGas(): u64 {
-  return abi.remainingGas();
+  return env.remainingGas();
 }

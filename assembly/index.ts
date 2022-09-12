@@ -1,4 +1,4 @@
-import * as abi from './abi';
+import {env} from './env';
 import {Address} from './address';
 import * as Storage from './storage';
 import * as Context from './context';
@@ -11,7 +11,7 @@ export {Address, Storage, Context};
  * @param {string} message Message string
  */
 export function print(message: string): void {
-  abi.print(message);
+  env.print(message);
 }
 
 /**
@@ -32,7 +32,7 @@ export function call(
   args: string,
   coins: u64,
 ): string {
-  return abi.call(at.toByteString(), functionName, args, coins);
+  return env.call(at.toByteString(), functionName, args, coins);
 }
 
 /**
@@ -49,7 +49,7 @@ export function call(
  * @return {string} Smart contract address
  */
 export function createSC(bytecode: string): Address {
-  return Address.fromByteString(abi.createSC(bytecode));
+  return Address.fromByteString(env.createSC(bytecode));
 }
 
 /**
@@ -58,7 +58,7 @@ export function createSC(bytecode: string): Address {
  * @param {string} event - stringified
  */
 export function generateEvent(event: string): void {
-  abi.generateEvent(event);
+  env.generateEvent(event);
 }
 
 /**
@@ -68,7 +68,7 @@ export function generateEvent(event: string): void {
  * @param {u64} amount - value in the smallest unit.
  */
 export function transferCoins(to: Address, amount: u64): void {
-  abi.transferCoins(to.toByteString(), amount);
+  env.transferCoins(to.toByteString(), amount);
 }
 
 /**
@@ -79,7 +79,7 @@ export function transferCoins(to: Address, amount: u64): void {
  * @param {u64} amount - value in the smallest unit.
  */
 export function transferCoinsOf(from: Address, to: Address, amount: u64): void {
-  abi.transferCoinsOf(from.toByteString(), to.toByteString(), amount);
+  env.transferCoinsOf(from.toByteString(), to.toByteString(), amount);
 }
 
 /**
@@ -88,7 +88,7 @@ export function transferCoinsOf(from: Address, to: Address, amount: u64): void {
  * @return {u64} - value in the smallest unit.
  */
 export function balance(): u64 {
-  return abi.balance();
+  return env.balance();
 }
 
 /**
@@ -99,7 +99,7 @@ export function balance(): u64 {
  * @return {u64} - value in the smallest unit.
  */
 export function balanceOf(address: string): u64 {
-  return abi.balanceOf(address);
+  return env.balanceOf(address);
 }
 
 /**
@@ -110,7 +110,7 @@ export function balanceOf(address: string): u64 {
  * @return {string}
  */
 export function toBase58(data: string): string {
-  return abi.toBase58(data);
+  return env.toBase58(data);
 }
 
 /**
@@ -127,7 +127,7 @@ export function isSignatureValid(
   digest: string,
   signature: string,
 ): bool {
-  return abi.isSignatureValid(digest, signature, publicKey);
+  return env.isSignatureValid(digest, signature, publicKey);
 }
 
 /**
@@ -138,7 +138,7 @@ export function isSignatureValid(
  * @return {Address}
  */
 export function publicKeyToAddress(pubKey: string): Address {
-  return Address.fromByteString(abi.publicKeyToAddress(pubKey));
+  return Address.fromByteString(env.publicKeyToAddress(pubKey));
 }
 
 /**
@@ -149,7 +149,7 @@ export function publicKeyToAddress(pubKey: string): Address {
  * @return {i64}
  */
 export function unsafeRandom(): i64 {
-  return abi.unsafeRandom();
+  return env.unsafeRandom();
 }
 
 /**
@@ -180,7 +180,7 @@ export function sendMessage(
   coins: u64,
   msg: string,
 ): void {
-  abi.sendMessage(
+  env.sendMessage(
     at.toByteString(),
     functionName,
     validityStartPeriod,
@@ -217,7 +217,7 @@ export function fileToBase64(
  * @return {u8}
  */
 export function currentPeriod(): u64 {
-  return abi.currentPeriod();
+  return env.currentPeriod();
 }
 
 /**
@@ -225,5 +225,5 @@ export function currentPeriod(): u64 {
  * @return {u8}
  */
 export function currentThread(): u8 {
-  return abi.currentThread();
+  return env.currentThread();
 }

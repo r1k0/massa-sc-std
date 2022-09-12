@@ -2,17 +2,27 @@
     "name": "@massalabs/massa-sc-std",
     "version": "4.0.2",
     "description": "Massa standard library interfaces",
+    "main": "assembly/index.ts",
+    "type": "module",
+    "types": "assembly/index.ts",
+    "author": "Massa Labs <info@massa.net>",
+    "license": "MIT",
+    "contributors": ["Grégory Libert <greg_libert@yahoo.fr> "],
+    "private": false,
     "repository": {
         "type": "git",
         "url": "git+https://github.com/massalabs/massa-sc-std"
-      },
-    "types": "assembly/index.ts",
-    "author": "Massa Labs <info@massa.net>",
-    "contributors": ["Grégory Libert <greg_libert@yahoo.fr> "],
-    "private": false,
+    },
     "publishConfig": {
         "access": "public",
         "registry": "https://registry.npmjs.org/"
+    },
+    "scripts": {
+        "test": "asp --verbose",
+        "test:ci": "asp --summary",
+        "fmt": "prettier --write '{*,**/*}.{js,ts,jsx,tsx,json}'",
+        "lint:fix": "eslint --fix --ext .ts .",
+        "lint": "eslint --ext .ts . && prettier --check '{*,**/*}.{js,ts,jsx,tsx,json}'"
     },
     "keywords": [
         "massa",
@@ -23,25 +33,25 @@
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^5.29.0",
         "@typescript-eslint/parser": "^5.29.0",
-        "assemblyscript": "^0.19.20",
-        "eslint": "^8.18.0",
+        "@as-pect/cli": "^7.0.7",
+        "as-console": "^6.0.2",
+        "assemblyscript": "^0.21.2",
+        "@assemblyscript/loader": "^0.21.2",
+        "eslint": "^8.12.0",
         "eslint-config-google": "^0.14.0",
         "eslint-config-prettier": "^8.5.0",
         "eslint-plugin-prettier": "^4.0.0",
         "jest": "^27.4.5",
         "prettier": "^2.7.1",
-        "typescript": "^4.7.4"
+        "typescript": "^4.8.3",
+        "massa-as": "git+https://github.com/massalabs/massa-as"
     },
     "dependencies": {
-        "assemblyscript-json": "^1.1.0",
-        "mscl-type": "https://gitpkg.now.sh/massalabs/massa-sc-library/type?main"
     },
-    "scripts": {
-        "test": "asc assembly/index.ts",
-        "fmt": "prettier --write '{*,**/*}.{js,ts,jsx,tsx,json}'",
-        "lint:fix": "eslint --fix --ext .ts .",
-        "lint": "eslint --ext .ts . && prettier --check '{*,**/*}.{js,ts,jsx,tsx,json}'"
-    },
-    "main": "assembly/index.ts",
-    "license": "MIT"
+    "exports": {
+      ".": {
+        "import": "./build/release.js",
+        "types": "./build/release.d.ts"
+      }
+    }
 }

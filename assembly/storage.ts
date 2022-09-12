@@ -1,4 +1,4 @@
-import * as abi from './abi';
+import {env} from './env';
 import {Address} from './address';
 
 /**
@@ -10,7 +10,7 @@ import {Address} from './address';
  * @param {string} value
  */
 export function set(key: string, value: string): void {
-  abi.set(key, value);
+  env.set(key, value);
 }
 
 /**
@@ -24,7 +24,7 @@ export function set(key: string, value: string): void {
  * @param {string} value
  */
 export function setOf(address: Address, key: string, value: string): void {
-  abi.setOf(address.toByteString(), key, value);
+  env.setOf(address.toByteString(), key, value);
 }
 
 /**
@@ -37,7 +37,7 @@ export function setOf(address: Address, key: string, value: string): void {
  * @return {string}
  */
 export function get(key: string): string {
-  return abi.get(key);
+  return env.get(key);
 }
 
 /**
@@ -51,7 +51,7 @@ export function get(key: string): string {
  * @return {string}
  */
 export function getOf(address: Address, key: string): string {
-  return abi.getOf(address.toByteString(), key);
+  return env.getOf(address.toByteString(), key);
 }
 
 /**
@@ -63,7 +63,7 @@ export function getOf(address: Address, key: string): string {
  * @param {string} key
  */
 export function del(key: string): void {
-  abi.del(key);
+  env.del(key);
 }
 
 /**
@@ -76,7 +76,7 @@ export function del(key: string): void {
  * @param {string} key
  */
 export function deleteOf(address: Address, key: string): void {
-  abi.deleteOf(address.toByteString(), key);
+  env.deleteOf(address.toByteString(), key);
 }
 
 /**
@@ -89,7 +89,7 @@ export function deleteOf(address: Address, key: string): void {
  * @param {string} value
  */
 export function append(key: string, value: string): void {
-  abi.append(key, value);
+  env.append(key, value);
 }
 
 /**
@@ -108,7 +108,7 @@ export function appendOf(
   key: string,
   value: string,
 ): void {
-  abi.appendOf(address.toByteString(), key, value);
+  env.appendOf(address.toByteString(), key, value);
 }
 
 /**
@@ -119,7 +119,7 @@ export function appendOf(
  * @return {bool}
  */
 export function has(key: string): bool {
-  return abi.has(key);
+  return env.has(key);
 }
 
 /**
@@ -132,7 +132,7 @@ export function has(key: string): bool {
  * @return {bool}
  */
 export function hasOf(address: Address, key: string): bool {
-  return abi.hasOf(address.toByteString(), key);
+  return env.hasOf(address.toByteString(), key);
 }
 
 /**
@@ -143,7 +143,7 @@ export function hasOf(address: Address, key: string): bool {
  * @param {string} bytecode base64-encoded
  */
 export function setBytecode(bytecode: string): void {
-  abi.setBytecode(bytecode);
+  env.setBytecode(bytecode);
 }
 
 /**
@@ -155,5 +155,5 @@ export function setBytecode(bytecode: string): void {
  * @param {string} bytecode base64-encoded
  */
 export function setBytecodeOf(address: Address, bytecode: string): void {
-  abi.setBytecodeOf(address.toByteString(), bytecode);
+  env.setBytecodeOf(address.toByteString(), bytecode);
 }
